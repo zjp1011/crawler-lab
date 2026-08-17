@@ -1,0 +1,4 @@
+interface:
+  display_name: Crawler Lab
+  short_description: Build and review compliant Python crawlers.
+  default_prompt: Use Crawler Lab to design a compliant static crawler and explain the validation steps.

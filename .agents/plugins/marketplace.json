@@ -1,0 +1,20 @@
+{
+  "name": "crawler-lab-marketplace",
+  "interface": {
+    "displayName": "Crawler Lab Marketplace"
+  },
+  "plugins": [
+    {
+      "name": "crawler-lab",
+      "source": {
+        "source": "local",
+        "path": "./plugins/crawler-lab"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}
