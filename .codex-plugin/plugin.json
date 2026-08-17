@@ -1,0 +1,32 @@
+{
+  "name": "crawler-lab",
+  "version": "0.1.0",
+  "description": "A local Codex plugin for compliant, testable Python static web crawling workflows.",
+  "author": {
+    "name": "Local developer"
+  },
+  "keywords": [
+    "crawler",
+    "scraping",
+    "python",
+    "compliance"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Crawler Lab",
+    "shortDescription": "Build and review compliant Python crawlers.",
+    "longDescription": "Crawler Lab helps Codex design, implement, review, and demonstrate compliant static crawling workflows with local fixtures, structured outputs, and clear safety boundaries.",
+    "developerName": "Local developer",
+    "category": "Productivity",
+    "capabilities": [
+      "Write",
+      "Analyze"
+    ],
+    "defaultPrompt": [
+      "Use Crawler Lab to design a compliant crawler.",
+      "Review this crawler for compliance and stability.",
+      "Parse this page into structured CSV output."
+    ],
+    "brandColor": "#0F766E"
+  }
+}
