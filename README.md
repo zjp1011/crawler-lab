@@ -1,38 +1,38 @@
 # Crawler Lab
 
-Crawler Lab is a Codex skill/plugin for designing, reviewing, and demonstrating compliant Python static web crawlers.
+Crawler Lab 是一个用于 Codex 的爬虫 Skill / Plugin，目标是帮助用户设计、审查和展示**合规、可验证、可复用**的 Python 静态网页爬虫工作流。
 
-It is built for two use cases:
+这个项目主要面向两个场景：
 
-- **Portfolio and interviews**: show a repeatable crawler demo with clear compliance boundaries.
-- **Daily Codex use**: ask Codex to design, review, or scaffold a crawler with safety checks, structured output, and local fixtures.
+- **面试和作品展示**：用一个稳定的本地 Demo 展示爬虫工程能力、合规意识和结构化输出能力。
+- **日常复用**：让 Codex 在生成或审查爬虫时，默认遵守授权、robots.txt、限速、隐私保护和错误处理等边界。
 
-## What It Does
+## 功能
 
-- Designs Python static crawler workflows.
-- Reviews crawler code for compliance and reliability risks.
-- Parses HTML into structured CSV/JSON outputs.
-- Uses local HTML fixtures for stable demos without live network scraping.
-- Documents safe defaults for robots.txt, rate limits, timeouts, retries, and sensitive data handling.
+- 设计 Python 静态网页爬虫方案。
+- 审查爬虫代码中的合规风险和稳定性问题。
+- 将 HTML 页面解析为结构化 CSV / JSON。
+- 使用本地 HTML fixture 做稳定演示，不依赖真实网站网络环境。
+- 提供 robots.txt、限速、User-Agent、重试、日志、隐私数据处理等合规参考。
 
-## Compliance Boundaries
+## 合规边界
 
-Crawler Lab is intentionally conservative:
+Crawler Lab 默认采用保守合规策略：
 
-- Confirm authorization before crawling third-party or private systems.
-- Respect robots.txt, terms of service, official APIs, and published rate limits.
-- Do not bypass CAPTCHA, paywalls, login walls, bans, or anti-bot controls.
-- Do not collect sensitive personal data unless there is explicit lawful authorization and a clear minimization plan.
-- Stop on repeated `401`, `403`, `429`, CAPTCHA-like pages, or block responses.
+- 采集第三方网站或非公开系统前，先确认授权。
+- 优先使用官方 API；如果必须爬取网页，应遵守 robots.txt、服务条款和公开限速规则。
+- 不绕过验证码、登录墙、付费墙、封禁、反爬机制或访问控制。
+- 不采集敏感个人信息，除非存在明确合法授权，并且只采集最小必要字段。
+- 遇到连续 `401`、`403`、`429`、验证码页面或封禁提示时，应立即停止。
 
-## Repository Layout
+## 仓库结构
 
 ```text
 .
-├── .agents/plugins/marketplace.json        # Codex marketplace definition
-├── .codex-plugin/plugin.json               # Plugin manifest for root plugin layout
-├── plugins/crawler-lab/                    # Marketplace-installable plugin copy
-└── skills/crawler-lab/                     # Direct skill install copy
+├── .agents/plugins/marketplace.json        # Codex marketplace 定义
+├── .codex-plugin/plugin.json               # 根目录插件 manifest
+├── plugins/crawler-lab/                    # marketplace 安装用插件副本
+└── skills/crawler-lab/                     # 直接安装用 Skill
     ├── SKILL.md
     ├── agents/openai.yaml
     ├── assets/fixtures/sample_catalog.html
@@ -40,9 +40,9 @@ Crawler Lab is intentionally conservative:
     └── scripts/crawl_fixture.py
 ```
 
-## Install As A Codex Skill
+## 作为 Codex Skill 安装
 
-This is the simplest and most reliable installation path.
+这是最简单、最稳定的安装方式。
 
 ### Windows PowerShell
 
@@ -56,43 +56,45 @@ Copy-Item -LiteralPath ".\skills\crawler-lab" -Destination "$env:USERPROFILE\.co
 xcopy ".\skills\crawler-lab" "%USERPROFILE%\.codex\skills\crawler-lab" /E /I /Y
 ```
 
-After copying, restart Codex or open a new task. Then try:
+复制完成后，重启 Codex 或新开一个任务，然后输入：
 
 ```text
 用 Crawler Lab 帮我设计一个合规爬虫
 ```
 
-## Install As A Codex Plugin Marketplace
+如果 Codex 能识别 `crawler-lab`，说明安装成功。
 
-If your Codex environment can access GitHub, add this repository as a marketplace:
+## 作为 Codex Plugin Marketplace 安装
+
+如果你的 Codex 环境可以正常访问 GitHub，可以把这个仓库作为 marketplace 添加：
 
 ```text
 https://github.com/zjp1011/crawler-lab
 ```
 
-Then install the `crawler-lab` plugin from `Crawler Lab Marketplace`.
+添加后，安装 `Crawler Lab Marketplace` 里的 `crawler-lab` 插件。
 
-If GitHub cloning fails because of network or proxy issues, use the direct skill installation method above.
+如果添加 marketplace 时出现 GitHub clone 失败、连接被重置、代理不可用等问题，建议使用上面的 **Skill 直接安装方式**。
 
-## Run The Local Demo
+## 运行本地 Demo
 
-The demo performs no network requests. It parses the bundled local HTML fixture and exports CSV/JSON.
+Demo 不访问真实网站，只解析仓库内置的本地 HTML fixture，并导出 CSV / JSON。
 
-From the repository root:
+在仓库根目录运行：
 
-Windows:
+### Windows
 
 ```powershell
 py .\skills\crawler-lab\scripts\crawl_fixture.py
 ```
 
-macOS/Linux or environments where `python` is on PATH:
+### macOS / Linux 或已配置 `python` 命令的环境
 
-```powershell
-python .\skills\crawler-lab\scripts\crawl_fixture.py
+```bash
+python ./skills/crawler-lab/scripts/crawl_fixture.py
 ```
 
-Expected output:
+预期输出：
 
 ```text
 Parsed 3 records
@@ -100,7 +102,7 @@ CSV: ...\skills\crawler-lab\tmp\sample_catalog.csv
 JSON: ...\skills\crawler-lab\tmp\sample_catalog.json
 ```
 
-Output schema:
+输出字段示例：
 
 ```json
 {
@@ -112,7 +114,7 @@ Output schema:
 }
 ```
 
-## Example Prompts
+## 示例提示词
 
 ```text
 用 Crawler Lab 帮我设计一个合规爬虫
@@ -130,14 +132,21 @@ Output schema:
 我面试时想展示一个 Python 爬虫项目，帮我组织讲法
 ```
 
-## Interview Talking Point
+## 面试讲法
 
-You can describe the project like this:
+可以这样介绍这个项目：
 
-> I built a Codex skill/plugin for compliant crawler engineering. It checks authorization and robots.txt expectations, avoids bypassing access controls, uses local HTML fixtures for repeatable parser tests, separates fetching/parsing/validation/export, and exports deterministic CSV/JSON results.
+> 我做了一个 Codex 爬虫 Skill / Plugin，用来规范爬虫开发流程。它会先确认授权和 robots.txt 边界，不支持绕过验证码、登录墙和反爬限制；工程上把获取页面、解析、字段校验和导出拆分开，并用本地 HTML fixture 做稳定测试，最后输出可验证的 CSV / JSON 结果。
 
-## Notes
+这能体现几个能力点：
 
-- The bundled demo uses Python standard-library parsing so it can run without extra dependencies.
-- For real-world pages, use `beautifulsoup4` or `lxml` when dependencies are available.
-- Prefer official APIs over scraping whenever a reliable API exists.
+- 知道爬虫不是只会 `requests.get`，还要考虑授权、频率、隐私和网站规则。
+- 能把爬虫逻辑拆成可测试、可维护的模块。
+- 能用本地 fixture 保证 Demo 稳定，不依赖线上网页是否变化。
+- 能输出结构化数据，方便后续分析或入库。
+
+## 说明
+
+- 内置 Demo 使用 Python 标准库解析 HTML，不需要额外安装依赖。
+- 真实项目中建议根据页面复杂度选择 `beautifulsoup4`、`lxml` 或官方 API。
+- 如果网站提供稳定 API，应优先使用 API，而不是直接抓取网页。
